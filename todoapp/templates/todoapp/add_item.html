@@ -1,0 +1,47 @@
+{% extends 'todoapp/base.html' %}
+
+{% block content %}
+<h5>Add New To-Do Item</h5>
+<form id="todoForm" method="POST" onsubmit="return validateForm();">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="item">Item</label>
+        <input type="text" id="item" name="item" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="desc">Description</label>
+        <textarea id="desc" name="desc" class="form-control" maxlength="200"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="due_date">Due Date</label>
+        <input type="datetime-local" id="due_date" name="due_date" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="completed">Completed</label>
+        <input type="checkbox" id="completed" name="completed">
+    </div>
+    <a href="/" class="btn btn-dark" color="red" role="button">BACK</a>
+    <button type="submit" class="btn btn-primary">Add Item</button>
+</form>
+
+<script>
+    function validateForm() {
+        var item = document.getElementById('item').value;
+        var dueDate = document.getElementById('due_date').value;
+        var currentDate = new Date().toISOString().slice(0, 16);
+
+        if (item === "") {
+            alert("Item field cannot be empty");
+            return false;
+        }
+
+        if (dueDate !== "" && dueDate < currentDate) {
+            alert("Due date cannot be in the past");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+{% endblock %}

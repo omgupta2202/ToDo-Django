@@ -39,11 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'todoapp',
+    # 'django.contrib.cache',
 ]
 LOGIN_URL = 'login'  # This should match the name of your login view
 LOGIN_REDIRECT_URL = 'index'  # Redirect to home after login
 LOGOUT_REDIRECT_URL = 'login'  # Redirect to login after logout
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

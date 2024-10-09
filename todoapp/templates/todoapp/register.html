@@ -1,13 +1,75 @@
 {% extends 'todoapp/base.html' %}
 
 {% block content %}
-<div class="container mt-5">
     <h2>Register</h2>
-    <form method="post">
+    <form method="POST" onsubmit="return validateRegistrationForm();" class="registration-form">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Register</button>
-        <p class="mt-3">Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="password1">Password:</label>
+            <input type="password" id="password1" name="password1" required class="form-control">
+            <input type="checkbox" id="showPassword1" onclick="togglePasswordVisibility('password1', this)"> Show Password
+        </div>
+
+        <div class="form-group">
+            <label for="password2">Confirm Password:</label>
+            <input type="password" id="password2" name="password2" required class="form-control">
+            <input type="checkbox" id="showPassword2" onclick="togglePasswordVisibility('password2', this)"> Show Password
+        </div>
+
+        <button type="submit" class="btn btn-outline-secondary">Register</button>
     </form>
-</div>
+
+    <script>
+        document.getElementById('username').addEventListener('blur', function() {
+            var username = this.value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/check-username/?username=' + username, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    if (xhr.responseText === 'taken') {
+                        alert('Username already taken.');
+                    }
+                }
+            };
+            xhr.send();
+        });
+
+        function validateRegistrationForm() {
+            var password1 = document.getElementById('password1').value;
+            var password2 = document.getElementById('password2').value;
+            var strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+            if (!strongPasswordPattern.test(password1)) {
+                alert("Password must contain at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character.");
+                return false;
+            }
+
+            if (password1 !== password2) {
+                alert("Passwords do not match.");
+                return false;
+            }
+
+            return true;
+        }
+
+        function togglePasswordVisibility(passwordFieldId, checkbox) {
+            var passwordField = document.getElementById(passwordFieldId);
+            if (checkbox.checked) {
+                passwordField.type = 'text'; 
+            } else {
+                passwordField.type = 'password'; // Hide password
+            }
+        }
+    </script>
 {% endblock %}

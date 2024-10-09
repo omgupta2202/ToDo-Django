@@ -44,3 +44,44 @@ label {
 .far.fa-circle {
   padding-right: 5px;
 }
+
+.registration-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.registration-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.registration-form .form-group {
+  margin-bottom: 15px;
+}
+
+.registration-form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.registration-form .form-control {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.registration-form button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
+.registration-form button:hover {
+  background-color: #5a6268;
+  border-color: #5a6268;
+}

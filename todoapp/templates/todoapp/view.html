@@ -11,6 +11,10 @@
         <td>{{ todo.item }}</td>
     </tr>
     <tr>
+        <th class="short-th" scope="col">Desc</th>
+        <td>{{ todo.desc }}</td>
+    </tr>
+    <tr>
         <th class="short-th" scope="col">Status</th>
         {% if todo.completed %}
         <td>Completed</td>
@@ -32,5 +36,9 @@
     </tr>
 </table>
 
-<a href="/" class="btn btn-dark" role="button">BACK</a>
+<a href="/" class="btn btn-dark" color="red" role="button"><i class="fas fa-arrow-left"></i> BACK</a>
+<a href="{% url 'edit' todo.id %}" class="btn btn-dark" role="button"><i class="fas fa-edit"></i>EDIT</a>
+
+
+
 {% endblock %}

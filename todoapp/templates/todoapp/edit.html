@@ -6,19 +6,33 @@
 
 {% block content %}
 {% if todoapp %}
-<form class="form-inline my-2 my-lg-0" method="POST">
+<form method="POST">
     {% csrf_token %}
-    <input class="form-control mr-sm-2" type="text" placeholder="{{ todoapp.item }}" value="{{ todoapp.item }}"
-        aria-label="Item" name="item" required>
+    <div class="form-group">
+        <label for="item">Item</label>
+        <input class="form-control" type="text" placeholder="Item" value="{{ todoapp.item }}" name="item" required>
+    </div>
     
-    <input type="hidden" value="{{ todoapp.completed }}" name="completed">
+    <div class="form-group">
+        <label for="desc">Description</label>
+        <textarea class="form-control" name="desc" maxlength="200">{{ todoapp.desc }}</textarea>
+    </div>
 
-    <label for="due_date" class="sr-only">Due Date</label>
-    <input class="form-control mr-sm-2" type="datetime-local" id="due_date" name="due_date" value="{{ todoapp.due_date|date:'Y-m-d\TH:i' }}" required>
+    <div class="form-group">
+        <label for="due_date">Due Date</label>
+        <input class="form-control" type="datetime-local" id="due_date" name="due_date" value="{{ todoapp.due_date|date:'Y-m-d\TH:i' }}" required>
+    </div>
 
-    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">SUBMIT CHANGES</button>
+    <div class="form-group">
+        <label for="completed">Completed</label>
+        <input type="checkbox" id="completed" name="completed" {% if todoapp.completed %}checked{% endif %}>
+    </div>
+
+    <button class="btn btn-outline-secondary" type="submit">SUBMIT CHANGES</button>
 </form>
 <br>
 <a href="{% url 'index' %}" class="btn btn-dark" role="button">BACK</a>
+{% else %}
+<p>No item found to edit.</p>
 {% endif %}
 {% endblock %}
